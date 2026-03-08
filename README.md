@@ -12,6 +12,9 @@ A powerful command-line manga downloader optimized for **rawlazy.io**, featuring
 |---------|-------------|
 | **Smart Folder Naming** | Automatically extracts the manga title from the page and uses it as the download folder name |
 | **Chapter-Based File Naming** | Extracts chapter number from URL — files are named like `105.jpg` instead of generic `page_001.jpg` |
+| **Auto-Download Seri** | Automatically finds and downloads the next chapters in a series |
+| **Image Splitting** | Automatically splits extremely tall merged images into standard pages using Pillow with configurable modes |
+| **Persistent Settings** | Customize UI themes and splitting preferences that save across sessions via `settings.json` |
 | **Selenium JS Rendering** | Auto-fallback to headless Chrome when pages load images via JavaScript |
 | **Batch Download** | Download multiple chapters at once — enter URLs one by one or paste them all at once |
 | **Rich Progress Bars** | Beautiful real-time download progress with speed, percentage, and ETA |
@@ -35,6 +38,7 @@ beautifulsoup4
 rich
 selenium
 webdriver-manager
+Pillow
 ```
 
 ---
@@ -51,7 +55,7 @@ cd Rawlazy-DL
 ### 2. Install dependencies
 
 ```bash
-pip install requests beautifulsoup4 rich selenium webdriver-manager
+pip install requests beautifulsoup4 rich selenium webdriver-manager Pillow
 ```
 
 Or using `requirements.txt`:
@@ -75,23 +79,25 @@ python manga.py
 You will see:
 
 ```
-╭──────────────────────────────────────────╮
-│  📖  MANGA DOWNLOADER  📖               │
-│  ─────────────────────────────           │
-│  Download raw manga chapters with ease!  │
-│  Smart naming • Batch download • Rich UI │
-│  by Takoyune                             │
-╰──────────────────────────────────────────╯
+╭──────────────────────────────────────────────╮
+│  🚀  Rawlazy-DL  🚀                          │
+│  ─────────────────────────────               │
+│  Download raw manga chapters with ease!      │
+│  Smart naming • Batch download • Rich UI     │
+│  by Takoyune                                 │
+╰──────────────────────────────────────────────╯
 
-┌───────────────────────────────────────┐
-│           📋 MAIN MENU               │
-├───────────────────────────────────────┤
-│  [1] Download single chapter          │
-│  [2] Download multiple chapters       │
-│  [3] Quick download (fast mode)       │
-│  [4] Paste batch links                │
-│  [0] Exit                             │
-└───────────────────────────────────────┘
+┌──────────────────────────────────────────────┐
+│             📋 MAIN MENU                     │
+├──────────────────────────────────────────────┤
+│  [1] Download single chapter                 │
+│  [2] Download multiple chapters              │
+│  [3] Quick download (fast mode)              │
+│  [4] Paste batch links                       │
+│  [5] Auto-Download Seri (Next Chapter)       │
+│  [6] Settings / UI Theme                     │
+│  [0] Exit                                    │
+└──────────────────────────────────────────────┘
 ```
 
 ### Menu Options
@@ -141,6 +147,14 @@ Paste multiple URLs at once (one per line), then press Enter on an empty line:
 📋 2 URLs ready to download!
 Start download? (y/n): y
 ```
+
+#### `[5]` Auto-Download Seri (Next Chapter)
+
+Input the first chapter URL, and the downloader will automatically find the "Next Chapter" link on each page and continue downloading sequentially until it reaches the latest chapter.
+
+#### `[6]` Settings / UI Theme
+
+Configure persistent settings for the application. You can change the UI theme color and customize the image splitter behavior (Split Only, Keep Merged Only, or Keep Both).
 
 ### Command-Line Mode
 
